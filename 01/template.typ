@@ -73,7 +73,7 @@
       data.access_date
     )
   }
-
+  set par(justify: false)
   parts.filter(x => x != "" and x != none).join(", ")
 }
 
