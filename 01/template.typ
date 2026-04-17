@@ -99,6 +99,15 @@
 
 #let withid(caption, content, id: none) = {
   set text(lang: "ja")
+  show figure.caption: it => {
+    text(font: (fontLatin, fontGothic))[
+      #it.supplement #context it.counter.display(it.numbering)
+    ]
+    
+    [#h(0.3em)]
+    
+    it.body
+  }
   [
     #figure(caption: caption, content)#label(if id == none { caption } else { id })
   ]
