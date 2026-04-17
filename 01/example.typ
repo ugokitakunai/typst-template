@@ -15,28 +15,37 @@
   humidity: 55
 )
 
-== 1. 1節
+=  Lorem
 
-#lorem(50)
+#lorem(20)
 
-== 2. 2節
-
-#lorem(50)
-
-== 3. 数式
+= 数式テスト
 $ x = (-b plus.minus sqrt(b^2-4a c)) / (2a) $
 
-== 4. 図のテスト
+= 図のテスト
 #img("test")
 
-== 5. 表のテスト
+= 表のテスト
 #tb(
-  "table",
+  "title",
     table(
     columns: 2,
     table.header([項目], [値]),
     [あ], [う],
     [え], [お],
   ),
-  "id"
+  "title"
 )
+
+= 参考文献のテスト
+#let refs = (
+  ref_book("山田 太郎", "Typstテンプレート", "なんとか出版", "2026"),
+  ref_web("Typstドキュメント", "https://typst.app/docs/", "2026/04/17"),
+  ref_paper(("田中", "鈴木"), "テンプレート", "雑誌", "99-100", "2026")
+)
+
+#set enum(numbering: "1)")
+#for ref in refs [
+  + #references(ref)
+]
+

@@ -14,8 +14,67 @@
   return days.at(day_of_week - 1)
 }
 
-#let references() = {
+#let ref_book(author, title, publisher, year) = {
+  return (
+    kind: "book",
+    author: author,
+    title: title,
+    publisher: publisher,
+    year: year
+  )
+}
 
+#let ref_paper(author, title, journal, pages, year) = {
+  return (
+    kind: "paper",
+    author: author,
+    title: title,
+    journal: journal,
+    pages: pages,
+    year: year
+  )
+}
+
+#let ref_web(title, url, access-date) = {
+  return (
+    kind: "web",
+    title: title,
+    url: url,
+    access_date: access-date + "閲覧"
+  )
+}
+
+#let references(data) = {
+  let format_authors(authors) = {
+    if type(authors) == array {
+      if authors.len() > 1 { authors.at(0) + "ら" } else { authors.at(0) }
+    } else { authors }
+  }
+
+  let parts = if data.kind == "book" {
+    (
+      format_authors(data.author),
+      "“" + data.title + "”",
+      data.at("publisher", default: ""), // 出版社
+      data.year
+    )
+  } else if data.kind == "paper" {
+    (
+      format_authors(data.author),
+      "“" + data.title + "”",
+      data.journal,
+      "pp. " + data.pages,
+      data.year
+    )
+  } else if data.kind == "web" {
+    (
+      data.title,
+      link(data.url),
+      data.access_date
+    )
+  }
+
+  parts.filter(x => x != "" and x != none).join(", ")
 }
 
 #let title_page(title: "", id: "", name: "", year: 1, month: 1, day: 1, weather: "晴", temp: 1, humidity: 1) = {
@@ -110,46 +169,15 @@
   })
 }
   
-  show heading.where(level: 1): it => {
-    set text(
-      font: fontGothic,
-      size: fontSizeHeading,
-      weight: "bold"
-    )
-    text()[
-      #it.body
-    ]
-  }
-  
   show "、": "，"
   show "。": "．"
-
-  show heading.where(level: 2): it => block({
-    set text(
-      font: fontGothic,
-      size: fontSizeHeading,
-      weight: "extrabold"
-    )
-    text()[
-      #it.body
-    ]
-  })
-
-  show heading.where(level: 3): it => block({
-    set text(
-      font: fontGothic,
-      size: fontSizeHeading,
-    )
-    text()[
-      #it.body
-    ]
-  })
 
   show heading: it => (
     {
       set text(
         size: fontSizeDefault,
-        weight: "extrabold"
+        weight: "extrabold",
+        font: (fontLatin, fontGothic)
       )
       set block(above: 1em, below: 1em)
       it
@@ -164,8 +192,6 @@
       }
     }
   )
-
-
 
   body
   
