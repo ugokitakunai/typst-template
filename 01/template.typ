@@ -77,22 +77,26 @@
   parts.filter(x => x != "" and x != none).join(", ")
 }
 
-#let title_page(title: "", id: "", name: "", year: 1, month: 1, day: 1, weather: "晴", temp: 1, humidity: 1) = {
+#let title_page(subject: "" ,title: "", department: "", id: "", name: "", year: 1, month: 1, day: 1, weather: "晴", temp: 1, humidity: 1) = {
   set align(center)
-  set text(size: 13pt)
-  set par(leading: 2em)
+  set text(size: 10.5pt)
+  set par(leading: 2.15em)
   [
-    \ \ \ \ \ \ \ 
-    #text(font: (fontLatin, fontMincho), size: fontSizeTitle)[教科名] \ 
+    #place(
+      top + right,
+      image("画像1.png")
+    )
+    \ \ \ \ \ 
+    #text(font: (fontLatin, fontMincho), size: fontSizeTitle)[#subject] \ 
     #text(font: (fontLatin, fontMincho), size: fontSizeTitle)[「#title」]
-    \ \ \
-    #text(font: (fontLatin, fontMincho), size: fontSizeTitle)[XX科] \ 
+    \ \ \ \ 
+    #text(font: (fontLatin, fontMincho), size: fontSizeTitle)[#department] \ 
     #text(font: (fontLatin, fontMincho), size: fontSizeTitle)[学籍番号：#id] \ 
     #text(font: (fontLatin, fontMincho), size: fontSizeTitle)[氏名：#name] \ 
-    \ \  
+    \ \ 
     #text(font: (fontLatin, fontMincho), size: fontSizeTitle)[実験日時： #year\年#month\月#day\日（#get_day_of_week(year, month, day)\曜日）] \ 
     #text(font: (fontLatin, fontMincho), size: fontSizeTitle)[天気： #weather　気温：#temp\℃　湿度：#humidity\％] \ 
-    #text(font: (fontLatin, fontMincho), size: fontSizeTitle)[実験日時： #year\年#month\月#day\日（#get_day_of_week(year, month, day)\曜日）] \ 
+    #text(font: (fontLatin, fontMincho), size: fontSizeTitle)[提出日時： 2026年4月20日（#get_day_of_week(year, month, day)\曜日）] \ 
     #pagebreak()
   ]
 }
@@ -100,7 +104,7 @@
 #let withid(caption, content, id: none) = {
   set text(lang: "ja")
   show figure.caption: it => {
-    text(font: (fontLatin, fontGothic))[
+    text(font: (fontLatin, fontGothic), weight: "regular")[
       #it.supplement #context it.counter.display(it.numbering)
     ]
     
@@ -158,8 +162,8 @@
     ),
   )
   set heading(numbering: "1.")
-  set par(leading: 0.8em, first-line-indent: 1em, justify: true)
-  set par(spacing: 0.8em)
+  set par(leading: 1em, first-line-indent: 1em, justify: true)
+  set par(spacing: 1em)
   set par(first-line-indent: (
     amount: 1em,
     all: true,
@@ -178,15 +182,15 @@
   })
 }
   
-  show "、": "，"
-  show "。": "．"
+  show "、": ","
+  show "。": "."
 
   show heading: it => (
     {
       set text(
         size: fontSizeDefault,
         weight: "extrabold",
-        font: (fontLatin, fontGothic)
+        font: (fontGothic)
       )
       set block(above: 1em, below: 1em)
       it
