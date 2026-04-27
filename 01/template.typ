@@ -104,7 +104,7 @@
 #let withid(caption, content, id: none) = {
   set text(lang: "ja")
   show figure.caption: it => {
-    text(font: (fontLatin, fontGothic), weight: "regular")[
+    text(font: (fontLatin, fontMincho))[
       #it.supplement #context it.counter.display(it.numbering)
     ]
     
